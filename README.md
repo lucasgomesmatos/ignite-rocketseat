@@ -1,1 +1,1 @@
-# Curso React Ignite Rocketseat
+# Curso de Ignite Rocketseat
