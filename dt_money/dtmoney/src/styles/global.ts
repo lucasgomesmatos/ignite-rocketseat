@@ -53,4 +53,12 @@ button {
   cursor: not-allowed;
 }
 
+.react-modal-overlay {
+
+}
+
+.react-modal-content {
+  
+}
+
 `
