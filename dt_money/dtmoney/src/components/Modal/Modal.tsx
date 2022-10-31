@@ -3,8 +3,9 @@ import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
 import closeImg from '../../assets/close.svg';
 import { Container, RadioBox, TransactionsTypeContainer } from './styles';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useContext, useEffect, useState } from 'react';
 import { api } from '../../service/api';
+import { TransactionsContext } from '../../context/TransactionsContext';
 
 interface IModalTransactionProps {
   isOpen: boolean;
@@ -16,17 +17,20 @@ export const ModalTransaction = ({
   onRequestClose,
 }: IModalTransactionProps) => {
   const [type, setType] = useState('deposit');
-
   const [title, setTitle] = useState('');
-  const [value, setValue] = useState(0);
+  const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState('');
+
+  const { createTransaction } = useContext(TransactionsContext);
 
   function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
-
-    const data = { title, value, category, type };
-
-    api.post('/transactions', data);
+    createTransaction({
+      title,
+      amount,
+      category,
+      type,
+    });
   }
 
   return (
@@ -55,8 +59,8 @@ export const ModalTransaction = ({
         <input
           type="number"
           placeholder="Valor"
-          value={value}
-          onChange={(event) => setValue(Number(event.target.value))}
+          value={amount}
+          onChange={(event) => setAmount(Number(event.target.value))}
         />
 
         <TransactionsTypeContainer>
