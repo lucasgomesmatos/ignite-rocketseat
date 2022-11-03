@@ -3,9 +3,8 @@ import incomeImg from '../../assets/income.svg';
 import outcomeImg from '../../assets/outcome.svg';
 import closeImg from '../../assets/close.svg';
 import { Container, RadioBox, TransactionsTypeContainer } from './styles';
-import { FormEvent, useContext, useEffect, useState } from 'react';
-import { api } from '../../service/api';
-import { TransactionsContext } from '../../context/TransactionsContext';
+import { FormEvent, useState } from 'react';
+import { useTransactions } from '../../hooks/useTransactions';
 
 interface IModalTransactionProps {
   isOpen: boolean;
@@ -21,7 +20,7 @@ export const ModalTransaction = ({
   const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState('');
 
-  const { createTransaction } = useContext(TransactionsContext);
+  const { createTransaction } = useTransactions();
 
   async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
