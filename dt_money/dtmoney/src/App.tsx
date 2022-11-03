@@ -7,7 +7,9 @@ import { TransactionsProvider } from './hooks/useTransactions';
 
 export function App() {
   const [isNewTransactionModalOpen, setIsNewTransactionModalOpen] =
-    useState(false);
+    useState(true);
+
+  const data = new Date();
 
   const handleOpenNewTransactionModal = () => {
     setIsNewTransactionModalOpen(!isNewTransactionModalOpen);
