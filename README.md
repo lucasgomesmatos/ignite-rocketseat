@@ -1,1 +1,0 @@
-# Curso de Ignite Rocketseat
