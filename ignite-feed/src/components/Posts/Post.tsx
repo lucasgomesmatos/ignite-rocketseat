@@ -2,19 +2,40 @@ import styles from './Post.module.css';
 import { Comment } from '../Comment/Comment';
 import { Avatar } from '../Avatar/Avatar';
 
-export const Post = () => {
+interface IAuthor {
+  avatarUrl: string;
+  name: string;
+  role: string;
+}
+
+interface IContent {
+  type: string;
+  content: string;
+}
+
+interface IPostProps {
+  id?: number;
+  author: IAuthor;
+  content: IContent[];
+  publishedAt: Date;
+}
+
+export const Post = (data: IPostProps) => {
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src="https://github.com/lucasgomesmatos.png" />
+          <Avatar src={data.author.avatarUrl} />
           <div className={styles.authorInfo}>
-            <strong>Lucas Gomes</strong>
-            <span>Web Developer</span>
+            <strong>{data.author.name}</strong>
+            <span>{data.author.role}</span>
           </div>
         </div>
 
-        <time title="11 de maio às 08:13h" dateTime="2022-05-11 08:13:30">
+        <time
+          title="11 de maio às 08:13h"
+          dateTime={data.publishedAt.toString()}
+        >
           Publicado há 1h
         </time>
       </header>
