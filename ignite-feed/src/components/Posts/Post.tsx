@@ -1,6 +1,8 @@
 import styles from './Post.module.css';
 import { Comment } from '../Comment/Comment';
 import { Avatar } from '../Avatar/Avatar';
+import { format, formatDistanceToNow } from 'date-fns';
+import ptBR from 'date-fns/locale/pt-BR';
 
 interface IAuthor {
   avatarUrl: string;
@@ -20,39 +22,47 @@ interface IPostProps {
   publishedAt: Date;
 }
 
-export const Post = (data: IPostProps) => {
+export const Post = ({ author, content, publishedAt }: IPostProps) => {
+  const publishedAtDateFormatted = format(
+    publishedAt,
+    "dd 'de' LLLL 'às' HH:mm'h'",
+    {
+      locale: ptBR,
+    },
+  );
+
+  const publishedAtDateRelativeToNow = formatDistanceToNow(publishedAt, {
+    locale: ptBR,
+    addSuffix: true,
+  });
+
   return (
     <article className={styles.post}>
       <header>
         <div className={styles.author}>
-          <Avatar src={data.author.avatarUrl} />
+          <Avatar src={author.avatarUrl} />
           <div className={styles.authorInfo}>
-            <strong>{data.author.name}</strong>
-            <span>{data.author.role}</span>
+            <strong>{author.name}</strong>
+            <span>{author.role}</span>
           </div>
         </div>
 
         <time
-          title="11 de maio às 08:13h"
-          dateTime={data.publishedAt.toString()}
+          title={publishedAtDateFormatted}
+          dateTime={publishedAt.toISOString()}
         >
-          Publicado há 1h
+          {publishedAtDateRelativeToNow}
         </time>
       </header>
 
       <div className={styles.content}>
-        <p>Fala galeraa 👋</p>
-        <p>
-          Acabei de subir mais um projeto no meu portifa. É um projeto que fiz
-          no NLW Return, evento da Rocketseat. O nome do projeto é DoctorCare 🚀
-        </p>
-        <p>
-          👉 <a href=""> jane.design/doctorcare</a>
-        </p>
-        <p>
-          <a href="">#novoprojeto</a> <a href="">#nlw</a>{' '}
-          <a href="">#rocketseat</a>
-        </p>
+        {content.map((item) => {
+          if (item.type === 'paragraph') {
+            return <p>{item.content}</p>;
+          } else if (item.type === 'link') {
+            return <a href="">{item.content}</a>;
+          }
+        })}
       </div>
 
       <form className={styles.commentForm}>
