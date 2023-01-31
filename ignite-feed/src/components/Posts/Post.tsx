@@ -3,6 +3,7 @@ import { Comment } from '../Comment/Comment';
 import { Avatar } from '../Avatar/Avatar';
 import { format, formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
+import { FormEvent, useState } from 'react';
 
 interface IAuthor {
   avatarUrl: string;
@@ -36,6 +37,13 @@ export const Post = ({ author, content, publishedAt }: IPostProps) => {
     addSuffix: true,
   });
 
+  const [comments, setComments] = useState(['Post muito bacana, hein!']);
+
+  function handleCreateNewComment(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setComments([...comments]);
+  }
+
   return (
     <article className={styles.post}>
       <header>
@@ -65,7 +73,7 @@ export const Post = ({ author, content, publishedAt }: IPostProps) => {
         })}
       </div>
 
-      <form className={styles.commentForm}>
+      <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
         <textarea placeholder="Deixe um comentário" />
         <footer>
@@ -73,7 +81,14 @@ export const Post = ({ author, content, publishedAt }: IPostProps) => {
         </footer>
       </form>
       <div className={styles.commentList}>
-        <Comment />
+        {comments.map((item) => (
+          <Comment
+            key={item}
+            comment={comments}
+            author={author}
+            publishedAt={publishedAt}
+          />
+        ))}
       </div>
     </article>
   );
