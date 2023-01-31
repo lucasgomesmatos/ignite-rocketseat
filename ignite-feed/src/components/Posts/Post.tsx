@@ -1,9 +1,9 @@
-import styles from './Post.module.css';
-import { Comment } from '../Comment/Comment';
-import { Avatar } from '../Avatar/Avatar';
 import { format, formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import { FormEvent, useState } from 'react';
+import { Avatar } from '../Avatar/Avatar';
+import { Comment } from '../Comment/Comment';
+import styles from './Post.module.css';
 
 interface IAuthor {
   avatarUrl: string;
