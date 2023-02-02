@@ -23,7 +23,10 @@ export const Comment = ({ author, comment, publishedAt }: ICommentProps) => {
           <header>
             <div className={styles.authorAndTime}>
               <strong>{author.name}</strong>
-              <time title="11 de maio às 08:13h" dateTime="2022-05-11 08:13:30">
+              <time
+                title="11 de maio às 08:13h"
+                dateTime={publishedAt.toUTCString()}
+              >
                 Cerca há 1h atrás
               </time>
             </div>
