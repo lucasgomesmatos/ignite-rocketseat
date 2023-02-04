@@ -39,7 +39,7 @@ export const Comment = ({ author, comment, publishedAt }: ICommentProps) => {
         <footer>
           <button>
             <ThumbsUp />
-            Aplaudir <span>20</span>
+            Aplaudir <span>21</span>
           </button>
         </footer>
       </div>
