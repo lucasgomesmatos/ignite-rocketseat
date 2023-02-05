@@ -38,10 +38,12 @@ export const Post = ({ author, content, publishedAt }: IPostProps) => {
   });
 
   const [comments, setComments] = useState(['Post muito bacana, hein!']);
+  const [newCommentText, setNewCommentText] = useState('');
 
   function handleCreateNewComment(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setComments([...comments]);
+    console.log([...comments, newCommentText]);
+    setComments([...comments, newCommentText]);
   }
 
   return (
@@ -75,16 +77,20 @@ export const Post = ({ author, content, publishedAt }: IPostProps) => {
 
       <form onSubmit={handleCreateNewComment} className={styles.commentForm}>
         <strong>Deixe seu feedback</strong>
-        <textarea placeholder="Deixe um comentário" />
+        <textarea
+          placeholder="Deixe um comentário"
+          value={newCommentText}
+          onChange={(event) => setNewCommentText(event.target.value)}
+        />
         <footer>
           <button type="submit">Publicar</button>
         </footer>
       </form>
       <div className={styles.commentList}>
-        {comments.map((item) => (
+        {comments.map((comment) => (
           <Comment
-            key={item}
-            comment={comments}
+            key={author.name}
+            comment={comment}
             author={author}
             publishedAt={publishedAt}
           />

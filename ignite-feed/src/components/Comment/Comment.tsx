@@ -10,7 +10,7 @@ interface IAuthor {
 
 interface ICommentProps {
   author: IAuthor;
-  comment: string[];
+  comment: string;
   publishedAt: Date;
 }
 
@@ -39,7 +39,7 @@ export const Comment = ({ author, comment, publishedAt }: ICommentProps) => {
         <footer>
           <button>
             <ThumbsUp />
-            Aplaudir <span>21</span>
+            Aplaudir <span>22</span>
           </button>
         </footer>
       </div>

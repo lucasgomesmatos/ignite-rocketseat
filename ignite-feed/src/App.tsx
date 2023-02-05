@@ -67,7 +67,6 @@ export const App = () => {
         <main>
           {post.map((item) => (
             <Post
-              id={item.id}
               key={item.id}
               author={item.author}
               content={item.content}
