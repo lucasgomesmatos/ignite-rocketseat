@@ -47,11 +47,12 @@ export const Post = ({ author, content, publishedAt }: IPostProps) => {
   }
 
   function handleDeleteComment(comment: string) {
-    console.log(comment);
     const commentWithoutDeleteOne = comments.filter((item) => item !== comment);
 
     setComments(commentWithoutDeleteOne);
   }
+
+  const isNewCommentEmpty = !newCommentText;
 
   return (
     <article className={styles.post}>
@@ -96,9 +97,12 @@ export const Post = ({ author, content, publishedAt }: IPostProps) => {
           placeholder="Deixe um comentário"
           value={newCommentText}
           onChange={(event) => setNewCommentText(event.target.value)}
+          required
         />
         <footer>
-          <button type="submit">Publicar</button>
+          <button disabled={isNewCommentEmpty} type="submit">
+            Publicar
+          </button>
         </footer>
       </form>
       <div className={styles.commentList}>
