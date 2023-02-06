@@ -12,9 +12,15 @@ interface ICommentProps {
   author: IAuthor;
   comment: string;
   publishedAt: Date;
+  onDeleteComment: (comment: string) => void;
 }
 
-export const Comment = ({ author, comment, publishedAt }: ICommentProps) => {
+export const Comment = ({
+  author,
+  comment,
+  publishedAt,
+  onDeleteComment,
+}: ICommentProps) => {
   return (
     <div className={styles.comment}>
       <Avatar hasBorder={false} src={author.avatarUrl} />
@@ -30,7 +36,10 @@ export const Comment = ({ author, comment, publishedAt }: ICommentProps) => {
                 Cerca há 1h atrás
               </time>
             </div>
-            <button title="deletar comentário">
+            <button
+              onClick={() => onDeleteComment(comment)}
+              title="deletar comentário"
+            >
               <Trash size={24} />
             </button>
           </header>

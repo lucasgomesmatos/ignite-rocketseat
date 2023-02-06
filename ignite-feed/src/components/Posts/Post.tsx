@@ -42,8 +42,15 @@ export const Post = ({ author, content, publishedAt }: IPostProps) => {
 
   function handleCreateNewComment(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log([...comments, newCommentText]);
     setComments([...comments, newCommentText]);
+    setNewCommentText('');
+  }
+
+  function handleDeleteComment(comment: string) {
+    console.log(comment);
+    const commentWithoutDeleteOne = comments.filter((item) => item !== comment);
+
+    setComments(commentWithoutDeleteOne);
   }
 
   return (
@@ -68,9 +75,17 @@ export const Post = ({ author, content, publishedAt }: IPostProps) => {
       <div className={styles.content}>
         {content.map((item) => {
           if (item.type === 'paragraph') {
-            return <p>{item.content}</p>;
+            return (
+              <div key={item.content}>
+                <p>{item.content}</p>
+              </div>
+            );
           } else if (item.type === 'link') {
-            return <a href="">{item.content}</a>;
+            return (
+              <div key={item.content}>
+                <a href="">{item.content}</a>
+              </div>
+            );
           }
         })}
       </div>
@@ -89,10 +104,11 @@ export const Post = ({ author, content, publishedAt }: IPostProps) => {
       <div className={styles.commentList}>
         {comments.map((comment) => (
           <Comment
-            key={author.name}
+            key={comment}
             comment={comment}
             author={author}
             publishedAt={publishedAt}
+            onDeleteComment={handleDeleteComment}
           />
         ))}
       </div>
