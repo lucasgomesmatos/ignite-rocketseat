@@ -28,7 +28,6 @@ export const Comment = ({
     setLikeCount((old) => old + 1);
   }
 
-  console.log('first', author);
   return (
     <div className={styles.comment}>
       <Avatar hasBorder={false} src={author.avatarUrl} />
