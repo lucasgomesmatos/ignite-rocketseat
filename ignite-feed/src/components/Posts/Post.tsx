@@ -1,6 +1,6 @@
 import { format, formatDistanceToNow } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, InvalidEvent, useState } from 'react';
 import { Avatar } from '../Avatar/Avatar';
 import { Comment } from '../Comment/Comment';
 import styles from './Post.module.css';
@@ -40,10 +40,20 @@ export const Post = ({ author, content, publishedAt }: IPostProps) => {
   const [comments, setComments] = useState(['Post muito bacana, hein!']);
   const [newCommentText, setNewCommentText] = useState('');
 
-  function handleCreateNewComment(e: FormEvent<HTMLFormElement>) {
+  function handleCreateNewComment(e: FormEvent) {
     e.preventDefault();
     setComments([...comments, newCommentText]);
     setNewCommentText('');
+  }
+
+  function handleNewCommentChange(e: ChangeEvent<HTMLTextAreaElement>) {
+    e.target.setCustomValidity('');
+    setNewCommentText(e.target.value);
+  }
+
+  function handleNewCommentInvalid(e: InvalidEvent<HTMLTextAreaElement>) {
+    e.target.setCustomValidity('Esse campo é obrigatório');
+    setNewCommentText(e.target.value);
   }
 
   function handleDeleteComment(comment: string) {
@@ -96,7 +106,8 @@ export const Post = ({ author, content, publishedAt }: IPostProps) => {
         <textarea
           placeholder="Deixe um comentário"
           value={newCommentText}
-          onChange={(event) => setNewCommentText(event.target.value)}
+          onChange={handleNewCommentChange}
+          onInvalid={handleNewCommentInvalid}
           required
         />
         <footer>
