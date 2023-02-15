@@ -9,10 +9,45 @@ import {
   TaskInput,
 } from './style';
 
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import zod from 'zod';
+
+const newCycleFormValidationSchema = zod.object({
+  task: zod.string().min(1, 'Informe a tarefa'),
+  minutesAmount: zod
+    .number()
+    .min(5, 'O ciclo precisa ser de no mínimo de 5 minutos')
+    .max(60, 'O ciclo precisa ser de no máximo de 60 minutos'),
+});
+
+// interface NewCycleFormData {
+//   task: string;
+//   minutesAmount: number;
+// }
+
+type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>;
+
 export const Home = () => {
+  const { register, handleSubmit, watch, formState } =
+    useForm<NewCycleFormData>({
+      resolver: zodResolver(newCycleFormValidationSchema),
+      defaultValues: {
+        task: '',
+        minutesAmount: 0,
+      },
+    });
+
+  function handleCreateNewCycle(data: NewCycleFormData) {
+    console.log(data);
+  }
+
+  const task = watch('task');
+  const isSubmitDisabled = !task;
+
   return (
     <HomeContainer>
-      <form>
+      <form onSubmit={handleSubmit(handleCreateNewCycle)}>
         <FormContainer>
           <label htmlFor="task">Vou trabalhar em</label>
           <TaskInput
@@ -20,6 +55,7 @@ export const Home = () => {
             id="task"
             placeholder="Dê um nome para seu projeto"
             list="task-suggestions"
+            {...register('task')}
           />
           <datalist id="task-suggestions">
             <option value="Projeto 1" />
@@ -36,6 +72,7 @@ export const Home = () => {
             step={5}
             min={5}
             max={60}
+            {...register('minutesAmount', { valueAsNumber: true })}
           />
           <span>minutos</span>
         </FormContainer>
@@ -47,7 +84,7 @@ export const Home = () => {
           <span>0</span>
           <span>0</span>
         </CountDownContainer>
-        <StartCountDownButton type="submit">
+        <StartCountDownButton type="submit" disabled={isSubmitDisabled}>
           <Play size={24} />
           Começar
         </StartCountDownButton>
