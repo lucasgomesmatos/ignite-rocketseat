@@ -70,6 +70,8 @@ export const Home = () => {
       startDate: new Date(),
     };
 
+    console.log('teste');
+
     setCycles((state) => [...state, newCycle]);
     setActiveCyclesId(id);
     setAmountSecondsPassed(0);
