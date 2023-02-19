@@ -1,10 +1,11 @@
 import { useContext } from 'react';
-import * as zod from 'zod';
+import { useFormContext } from 'react-hook-form';
 import { CyclesContext } from '../..';
 import { FormContainer, MinutesAmountInput, TaskInput } from './style';
 
 export const NewCycleForm = () => {
   const { activeCycle } = useContext(CyclesContext);
+  const { register } = useFormContext();
 
   return (
     <FormContainer>
@@ -39,8 +40,3 @@ export const NewCycleForm = () => {
     </FormContainer>
   );
 };
-function zodResolver(
-  newCycleFormValidationSchema: any,
-): import('react-hook-form').Resolver<zod.infer<any>, any> | undefined {
-  throw new Error('Function not implemented.');
-}

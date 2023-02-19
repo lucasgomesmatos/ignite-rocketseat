@@ -9,13 +9,16 @@ import {
   StopCountDownButton,
 } from './style';
 
-import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FormProvider, useForm } from 'react-hook-form';
 import * as zod from 'zod';
 
 interface CyclesContextDataType {
   activeCycle: Cycle | undefined;
   activeCyclesId: string | null;
+  amountSecondsPassed: number;
   markCurrentCycleAsFinished: () => void;
+  setSecondsPassed: (seconds: number) => void;
 }
 
 export const CyclesContext = createContext({} as CyclesContextDataType);
@@ -33,17 +36,23 @@ type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>;
 export const Home = () => {
   const [cycles, setCycles] = useState<Cycle[]>([]);
   const [activeCyclesId, setActiveCyclesId] = useState<string | null>(null);
+  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0);
 
-  const { register, handleSubmit, watch, formState, reset } =
-    useForm<NewCycleFormData>({
-      resolver: zodResolver(newCycleFormValidationSchema),
-      defaultValues: {
-        task: '',
-        minutesAmount: 0,
-      },
-    });
+  const newCycleForm = useForm<NewCycleFormData>({
+    resolver: zodResolver(newCycleFormValidationSchema),
+    defaultValues: {
+      task: '',
+      minutesAmount: 0,
+    },
+  });
+
+  const { handleSubmit, watch, reset } = newCycleForm;
 
   const activeCycle = cycles.find((cycle) => cycle.id === activeCyclesId);
+
+  function setSecondsPassed(seconds: number) {
+    setAmountSecondsPassed(seconds);
+  }
 
   function markCurrentCycleAsFinished() {
     setCycles((state) =>
@@ -69,8 +78,6 @@ export const Home = () => {
       minutesAmount: data.minutesAmount,
       startDate: new Date(),
     };
-
-    console.log('teste');
 
     setCycles((state) => [...state, newCycle]);
     setActiveCyclesId(id);
@@ -101,9 +108,17 @@ export const Home = () => {
     <HomeContainer>
       <form onSubmit={handleSubmit(handleCreateNewCycle)}>
         <CyclesContext.Provider
-          value={{ activeCycle, activeCyclesId, markCurrentCycleAsFinished }}
+          value={{
+            activeCycle,
+            activeCyclesId,
+            markCurrentCycleAsFinished,
+            amountSecondsPassed,
+            setSecondsPassed,
+          }}
         >
-          <NewCycleForm />
+          <FormProvider {...newCycleForm}>
+            <NewCycleForm />
+          </FormProvider>
           <CountDown />
         </CyclesContext.Provider>
         {activeCycle ? (
@@ -121,19 +136,3 @@ export const Home = () => {
     </HomeContainer>
   );
 };
-function zodResolver(
-  newCycleFormValidationSchema: zod.ZodObject<
-    { task: zod.ZodString; minutesAmount: zod.ZodNumber },
-    'strip',
-    zod.ZodTypeAny,
-    { task: string; minutesAmount: number },
-    { task: string; minutesAmount: number }
-  >,
-):
-  | import('react-hook-form').Resolver<
-      { task: string; minutesAmount: number },
-      any
-    >
-  | undefined {
-  throw new Error('Function not implemented.');
-}
