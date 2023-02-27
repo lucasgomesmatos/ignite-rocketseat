@@ -23,7 +23,7 @@ interface CyclesContextProviderProps {
   children: ReactNode;
 }
 
-interface CycleState {
+interface CyclesState {
   cycles: Cycle[];
   activeCyclesId: string | null;
 }
@@ -32,11 +32,11 @@ export function CyclesContextProvider({
   children,
 }: CyclesContextProviderProps) {
   const [cycleState, dispatch] = useReducer(
-    (state: CycleState, action: any) => {
+    (state: CyclesState, action: any) => {
       if (action.type === 'ADD_NEW_CYCLE') {
         return {
           ...state,
-          cycle: [...state.cycles, action.payload.newCycle],
+          cycles: [...state.cycles, action.payload.newCycle],
           activeCyclesId: action.payload.newCycle.id,
         };
       }
@@ -44,7 +44,7 @@ export function CyclesContextProvider({
       if (action.type === 'INTERRUPT_CURRENT_CYCLE') {
         return {
           ...state,
-          cycle: state.cycles.map((cycle) => {
+          cycles: state.cycles.map((cycle) => {
             if (cycle.id === state.activeCyclesId) {
               return {
                 ...cycle,
@@ -66,10 +66,10 @@ export function CyclesContextProvider({
     },
   );
 
+  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0);
   const { cycles, activeCyclesId } = cycleState;
 
   // const [activeCyclesId, setActiveCyclesId] = useState<string | null>(null);
-  const [amountSecondsPassed, setAmountSecondsPassed] = useState(0);
 
   const activeCycle = cycles.find((cycle) => cycle.id === activeCyclesId);
 
