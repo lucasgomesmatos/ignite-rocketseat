@@ -47,7 +47,7 @@ export function CyclesContextProvider({
   }
 
   function markCurrentCycleAsFinished() {
-    dispatch(markCurrentCycleAsFinishedAction(activeCyclesId));
+    dispatch(markCurrentCycleAsFinishedAction());
   }
 
   function createNewCycle(data: CreateCycleData) {
@@ -66,7 +66,7 @@ export function CyclesContextProvider({
   }
 
   function interruptCurrentCycle() {
-    dispatch(interruptCurrentCycleAction(activeCyclesId));
+    dispatch(interruptCurrentCycleAction());
   }
 
   return (
