@@ -6,7 +6,6 @@ import {
   StartCountDownButton,
   StopCountDownButton,
 } from './style';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useContext } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -61,7 +60,7 @@ export const Home = () => {
         ) : (
           <StartCountDownButton type="submit" disabled={isSubmitDisabled}>
             <Play size={24} />
-            Começar
+            Começar o foco
           </StartCountDownButton>
         )}
       </form>
