@@ -17,7 +17,7 @@ export const Transactions = () => {
         <TransactionsTable>
           <tbody>
             <tr>
-              <td width="50%">Desenvolvimento do site</td>
+              <td width="50%">Desenvolvimento do sites</td>
               <td>
                 <PriceHighlight variant="income">R$ 12.000,00</PriceHighlight>{' '}
               </td>
