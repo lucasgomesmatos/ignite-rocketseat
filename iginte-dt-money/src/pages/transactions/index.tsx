@@ -21,7 +21,7 @@ export const Transactions = () => {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([]);
 
   async function getTransactions() {
-    const response = await fetch('http://localhost:5898/transactions');
+    const response = await fetch('http://localhost:5898/transaction');
     const data = await response.json();
 
     setTransactions(data);
