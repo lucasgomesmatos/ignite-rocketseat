@@ -4,7 +4,7 @@ import { api } from '../lib/axios';
 interface Transactions {
   id: number;
   description: string;
-  type: 'income' | 'outcome';
+  type: 'income' | 'outcome' | 'danger';
   category: string;
   price: number;
   createdAt: string;
