@@ -15,6 +15,30 @@
       "category": "Alimentação",
       "price": 50,
       "createdAt": "2023-03-25T01:51:21.883Z"
+    },
+    {
+      "description": "Desenvolvimento de App",
+      "price": 10000,
+      "category": "Venda",
+      "type": "income",
+      "createdAt": "2023-04-01T12:35:13.004Z",
+      "id": 3
+    },
+    {
+      "description": "Aula de Inglês",
+      "price": 420,
+      "category": "Educação",
+      "type": "outcome",
+      "createdAt": "2023-04-01T12:47:57.048Z",
+      "id": 4
+    },
+    {
+      "description": "Pizza",
+      "price": 50,
+      "category": "Alimentação",
+      "type": "outcome",
+      "createdAt": "2023-04-01T12:51:30.321Z",
+      "id": 5
     }
   ]
 }

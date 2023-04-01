@@ -24,10 +24,7 @@ export const SearchForm = () => {
   const { fetTransactions } = useContext(TransactionContext);
 
   const handleSearchTransactions = async (data: SearchFormInput) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
     fetTransactions(data.query);
-    console.log(data);
-    console.log(isSubmitting);
   };
 
   return (
