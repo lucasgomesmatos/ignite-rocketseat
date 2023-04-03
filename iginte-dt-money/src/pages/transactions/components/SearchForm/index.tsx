@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { MagnifyingGlass } from 'phosphor-react';
-import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { useContextSelector } from 'use-context-selector';
 import * as z from 'zod';
 import { TransactionContext } from '../../../../contexts/TransactionsContext';
 import { SearchFormContainer } from './style';
@@ -21,7 +21,10 @@ export const SearchForm = () => {
     resolver: zodResolver(searchFormSchema),
   });
 
-  const { fetTransactions } = useContext(TransactionContext);
+  const fetTransactions = useContextSelector(
+    TransactionContext,
+    (context) => context.fetTransactions,
+  );
 
   const handleSearchTransactions = async (data: SearchFormInput) => {
     fetTransactions(data.query);

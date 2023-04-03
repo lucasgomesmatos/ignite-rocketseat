@@ -47,7 +47,7 @@ export const TransactionsProvider = ({
     setTransactions((state) => [response.data, ...state]);
   }, []);
 
-  async function fetTransactions(query?: string) {
+  const fetTransactions = useCallback(async (query?: string) => {
     const { data } = await api.get('transactions', {
       params: {
         _sort: 'createdAt',
@@ -57,11 +57,11 @@ export const TransactionsProvider = ({
     });
 
     setTransactions(data);
-  }
+  }, []);
 
   useEffect(() => {
     fetTransactions();
-  }, []);
+  }, [fetTransactions]);
 
   return (
     <TransactionContext.Provider
